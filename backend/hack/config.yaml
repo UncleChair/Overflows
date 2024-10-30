@@ -11,9 +11,9 @@ gfcli:
     dao:
     # If in docker container, we should use
     # database rather than localhost
-    # - link: "sqlite::@file(/var/data/db.sqlite3)"
+    # - link: "sqlite::@file(./manifest/database/SQLite/overflows.db)"
     - link: "pgsql:overflower:Passw0rd@tcp(localhost:5432)/overflows"
-      tablesEx: "casbin_rule"
+      tablesEx: "casbin_rule, atlas_schema_revisions, sqlite_sequence"
 
   run:
     path:  "bin"

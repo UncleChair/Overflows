@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users
     deleted_at DATETIME DEFAULT NULL,
     last_login DATETIME DEFAULT NULL,
     login_attempts INTEGER DEFAULT 0,
-    lock INTEGER DEFAULT 0,
+    lock BOOLEAN DEFAULT FALSE,
     lock_at DATETIME DEFAULT NULL,
     UNIQUE (username, email)
 );
