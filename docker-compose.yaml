@@ -37,7 +37,7 @@ services:
       timeout: 3s
       retries: 5
     volumes:
-      - ./backend/manifest/database/:/var/database
+      - ./backend/manifest/database/Pgsql/:/var/database
       - database:/var/lib/postgresql/data
     ports:
       - "${DB_EXPOSE_PORT}:5432"
