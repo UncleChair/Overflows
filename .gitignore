@@ -44,6 +44,7 @@ backend/temp.yaml
 backend/bin
 backend/**/config/config.yaml
 backend/resource/public/www/*
+backend/manifest/database/SQLite/overflows.db
 
 # Docker
 .env
