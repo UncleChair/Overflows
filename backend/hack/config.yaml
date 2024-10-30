@@ -6,3 +6,32 @@ gfcli:
     build: "-a amd64 -s linux -p temp -ew"
     tagPrefixes:
       - my.image.pub/my-app
+
+  gen:
+    dao:
+    # If in docker container, we should use
+    # database rather than localhost
+    # - link: "sqlite::@file(/var/data/db.sqlite3)"
+    - link: "pgsql:overflower:Passw0rd@tcp(localhost:5432)/overflows"
+      tablesEx: "casbin_rule"
+
+  run:
+    path:  "bin"
+    args:  ""
+
+  build:
+    name: "overflows"
+    arch: "amd64"
+    system: "windows"
+    packSrc: "resource/public/html"
+    output: "./tmp/overflows"
+    dumpEnv: true
+    extra: "-ldflags=\"-H windowsgui\""
+
+  # build:
+  #   name: "overflows"
+  #   arch: "amd64"
+  #   system: "linux"
+  #   packSrc: "resource/public/html"
+  #   output: "./tmp/overflows"
+  #   dumpEnv: true

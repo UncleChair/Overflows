@@ -1,0 +1,52 @@
+version: "3"
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile.backend
+      context: .
+      target: dev
+    env_file:
+      - .env
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - ./backend:/var/www
+    environment: &overflows-environment
+      CONTAINER_ROLE: backend
+      DB_HOST: ${DB_HOST:-database}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_DATABASE: ${DB_DATABASE:-overflows}
+      DB_USERNAME: ${DB_USERNAME:-overflower}
+      DB_PASSWORD: ${DB_PASSWORD:-Passw0rd}
+    ports:
+      - "${API_EXPOSE_PORT}:8000"
+      
+  database:
+    image: postgres:16
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-overflows}
+      POSTGRES_USER: ${DB_USERNAME:-overflower}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Passw0rd}
+      TZ: ${DB_TIMEZONE:-Asia/Shanghai}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "${DB_DATABASE:-overflows}", "-U", "${DB_USERNAME:-overflower}"]
+      start_period: 3s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - ./backend/manifest/database/:/var/database
+      - database:/var/lib/postgresql/data
+    ports:
+      - "${DB_EXPOSE_PORT}:5432"
+
+  pgadminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  database:

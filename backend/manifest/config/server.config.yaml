@@ -1,0 +1,35 @@
+server:
+  address:              ":8000"
+  openapiPath:          "/api.json"
+  swaggerPath:          "/swagger"
+  graceful:             true
+  gracefulTimeout:      10
+  logStdout:            false
+  errorLogEnabled:      false
+  accessLogEnabled:     false
+  DumpRouterMap:        false
+
+database:
+  logger:
+    path:               "./Overflows_log"
+    file:               "database-{Y-m-d}.log"
+    level :             "all"
+    stdout:             true
+  default:
+    host:               "localhost"
+    port:               "5432"
+    user:               "overflower"
+    pass:               "Passw0rd"
+    name:               "overflows"
+    type:               "pgsql"
+    timezone:           "Asia/Shanghai"
+    role:               "master"
+    debug:              "true"
+    dryrun:             0
+    charset:            "utf8mb4"
+    maxLifetime:        "30s"
+
+logger:
+  path:                 "./Overflows_log"
+  level :               "all"
+  stdout:               true

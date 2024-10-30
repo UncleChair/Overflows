@@ -1,0 +1,49 @@
+
+# Frontend
+.DS_Store
+frontend/node_modules
+frontend/dist
+
+# local env files
+frontend/.env.local
+frontend/.env.*.local
+
+# Log files
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Backend
+backend/.buildpath
+backend/.hgignore.swp
+backend/.project
+backend/.orig
+backend/.swp
+backend/.idea/
+backend/.settings/
+backend/.vscode/
+backend/bin/
+backend/**/.DS_Store
+backend/gf
+backend/main
+backend/main.exe
+backend/output/
+backend/manifest/output/
+backend/temp/
+backend/temp.yaml
+backend/bin
+backend/**/config/config.yaml
+backend/resource/public/www/*
+
+# Docker
+.env
