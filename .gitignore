@@ -34,6 +34,7 @@ backend/.settings/
 backend/.vscode/
 backend/bin/
 backend/**/.DS_Store
+backend/atlas.exe
 backend/gf
 backend/main
 backend/main.exe
