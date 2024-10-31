@@ -23,15 +23,15 @@ gfcli:
     name: "overflows"
     arch: "amd64"
     system: "windows"
-    packSrc: "resource/public/html"
-    output: "./tmp/overflows"
-    dumpEnv: true
+    packSrc: "resource/public/www"
+    output: "./temp/overflows.exe"
+    dumpEnv: false
     extra: "-ldflags=\"-H windowsgui\""
 
   # build:
   #   name: "overflows"
   #   arch: "amd64"
   #   system: "linux"
-  #   packSrc: "resource/public/html"
+  #   packSrc: "resource/public/www"
   #   output: "./tmp/overflows"
   #   dumpEnv: true
