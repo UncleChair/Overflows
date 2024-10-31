@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"errors"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
@@ -18,17 +19,19 @@ var (
 		Brief: "start Overflows",
 		Arguments: []gcmd.Argument{
 			{Name: "port", Short: "p", Brief: "port number", IsArg: false, Orphan: true},
-			{Name: "server", Brief: "enable server mode", IsArg: true},
+			{Name: "mode", Short: "m", Brief: "mode", IsArg: false, Orphan: true},
 		},
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			port := parser.GetOpt("p", 8000)
 			s := g.Server()
 			s.SetPort(port.Int())
-			server := parser.GetOpt("server")
-			if server.Bool() {
+			mode := parser.GetOpt("m", "standalone")
+			if mode.String() == "standalone" {
+				Standalone.Run(ctx)
+			} else if mode.String() == "server" {
 				Server.Run(ctx)
 			} else {
-				Standalone.Run(ctx)
+				return errors.New("invalid mode")
 			}
 			return nil
 		},
