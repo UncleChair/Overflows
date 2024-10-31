@@ -17,6 +17,14 @@ var (
 	Standalone = gcmd.Command{
 		Name: "standalone",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+			go func() {
+				err = zenity.Info("App is running in background",
+					zenity.Title("Overflows"),
+					zenity.InfoIcon)
+				if err != nil {
+					panic(err)
+				}
+			}()
 			systray.Run(func() {
 				onReady(ctx)
 			}, func() {
@@ -33,7 +41,6 @@ func onReady(ctx context.Context) {
 	systray.SetTooltip("Overflows")
 
 	go func() {
-		s := g.Server()
 		mUrl := systray.AddMenuItem("Open UI", "Open Overflows Frontend")
 		mQuit := systray.AddMenuItem("Exit", "Quit the whole app")
 
@@ -45,9 +52,11 @@ func onReady(ctx context.Context) {
 		for {
 			select {
 			case <-mUrl.ClickedCh:
+				s := g.Server()
 				port := s.GetListenedPort()
 				openURL(fmt.Sprintf("http://127.0.0.1:%d", port))
 			case <-mQuit.ClickedCh:
+				s := g.Server()
 				systray.Quit()
 				s.Shutdown()
 				fmt.Println("Quit Overflows...")
