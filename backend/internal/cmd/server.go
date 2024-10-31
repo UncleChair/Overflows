@@ -2,20 +2,19 @@ package cmd
 
 import (
 	"context"
+	"overflows/internal/controller/auth"
+	"overflows/internal/controller/users"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
-
-	"overflows/internal/controller/auth"
-	"overflows/internal/controller/users"
 )
 
 var (
-	Main = gcmd.Command{
-		Name:  "main",
-		Usage: "main",
-		Brief: "start http server",
+	Server = gcmd.Command{
+		Name:  "server",
+		Usage: "server",
+		Brief: "start http server backend only",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.Group("/", func(group *ghttp.RouterGroup) {

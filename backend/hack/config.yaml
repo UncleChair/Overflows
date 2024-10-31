@@ -23,7 +23,7 @@ gfcli:
     name: "overflows"
     arch: "amd64"
     system: "windows"
-    packSrc: "resource/public/www"
+    packSrc: "resource/public/www, manifest/config/config.yaml"
     output: "./temp/overflows.exe"
     dumpEnv: false
     extra: "-ldflags=\"-H windowsgui\""
@@ -32,6 +32,6 @@ gfcli:
   #   name: "overflows"
   #   arch: "amd64"
   #   system: "linux"
-  #   packSrc: "resource/public/www"
-  #   output: "./tmp/overflows"
-  #   dumpEnv: true
+  #   packSrc: "resource/public/www, manifest/config/config.yaml"
+  #   output: "./temp/overflows"
+  #   dumpEnv: false
