@@ -12,6 +12,7 @@ import (
 	"github.com/getlantern/systray/example/icon"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
+	"github.com/ncruces/zenity"
 
 	"overflows/internal/cmd"
 
@@ -42,10 +43,7 @@ func onReady() {
 			select {
 			case <-mUrl.ClickedCh:
 				port := s.GetListenedPort()
-				err := openURL(fmt.Sprintf("http://127.0.0.1:%d", port))
-				if err != nil {
-					fmt.Println("Failed to open URL:", err)
-				}
+				openURL(fmt.Sprintf("http://127.0.0.1:%d", port))
 			case <-mQuit.ClickedCh:
 				systray.Quit()
 				s.Shutdown()
@@ -65,7 +63,7 @@ func onExit() {
 	os.WriteFile(fmt.Sprintf(`on_exit_%d.txt`, now.UnixNano()), []byte(now.String()), 0644)
 }
 
-func openURL(url string) error {
+func openURL(url string) {
 	var err error
 	switch runtime.GOOS {
 	case "windows":
@@ -74,8 +72,10 @@ func openURL(url string) error {
 		err = exec.Command("open", url).Start()
 	case "linux":
 		err = exec.Command("xdg-open", url).Start()
-	default:
-		return fmt.Errorf("unsupported platform")
 	}
-	return err
+	if err != nil {
+		zenity.Info(fmt.Sprintf("Please input the following URL in your browser:\n%s", url),
+			zenity.Title("Failed to open UI"),
+			zenity.InfoIcon)
+	}
 }
