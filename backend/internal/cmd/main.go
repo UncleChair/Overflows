@@ -13,8 +13,8 @@ var (
 		Name:  "overflows",
 		Brief: "start Overflows",
 		Arguments: []gcmd.Argument{
-			{Name: "port", Short: "p", Brief: "port number", IsArg: false, Orphan: true},
-			{Name: "mode", Short: "m", Brief: "run mode, choose from [standalone, server]", IsArg: false, Orphan: true},
+			{Name: "port", Short: "p", Brief: "port number", IsArg: false},
+			{Name: "mode", Short: "m", Brief: "run mode, choose from [standalone, server]", IsArg: false},
 		},
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			port := parser.GetOpt("p", 8000)
