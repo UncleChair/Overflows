@@ -7,7 +7,8 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
 
-	"overflows/internal/controller/hello"
+	"overflows/internal/controller/auth"
+	"overflows/internal/controller/users"
 )
 
 var (
@@ -20,9 +21,12 @@ var (
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(
-					hello.NewV1(),
+					auth.NewV1(),
+					users.NewV1(),
 				)
 			})
+			s.SetFileServerEnabled(true)
+			s.SetServerRoot("./resource/public/www")
 			s.Run()
 			return nil
 		},
