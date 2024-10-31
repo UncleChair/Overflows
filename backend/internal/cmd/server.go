@@ -13,7 +13,6 @@ import (
 var (
 	Server = gcmd.Command{
 		Name:  "server",
-		Usage: "server",
 		Brief: "start http server backend only",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()

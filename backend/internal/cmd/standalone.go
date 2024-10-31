@@ -15,9 +15,7 @@ import (
 
 var (
 	Standalone = gcmd.Command{
-		Name:  "standalone",
-		Usage: "standalone",
-		Brief: "start standalone app",
+		Name: "standalone",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			systray.Run(func() {
 				onReady(ctx)

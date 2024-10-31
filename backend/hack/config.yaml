@@ -35,3 +35,4 @@ gfcli:
   #   packSrc: "resource/public/www, manifest/config/config.yaml"
   #   output: "./temp/overflows"
   #   dumpEnv: false
+  #   cgo: true
