@@ -1,12 +1,11 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"os"
 	"os/exec"
 	_ "overflows/internal/packed"
 	"runtime"
-	"time"
 
 	"github.com/getlantern/systray"
 	"github.com/getlantern/systray/example/icon"
@@ -21,18 +20,23 @@ import (
 )
 
 func main() {
-	systray.Run(onReady, onExit)
+	ctx := gctx.New()
+	systray.Run(func() {
+		onReady(ctx)
+	}, func() {
+		onExit(ctx)
+	})
 }
 
-func onReady() {
+func onReady(ctx context.Context) {
 	systray.SetTemplateIcon(icon.Data, icon.Data)
 	systray.SetTitle("Overflows")
 	systray.SetTooltip("Overflows")
 
 	go func() {
 		s := g.Server()
-		mUrl := systray.AddMenuItem("Open UI", "my home")
-		mQuit := systray.AddMenuItem("退出", "Quit the whole app")
+		mUrl := systray.AddMenuItem("Open UI", "Open Overflows Frontend")
+		mQuit := systray.AddMenuItem("Exit", "Quit the whole app")
 
 		// Sets the icon of a menu item. Only available on Mac.
 		// mQuit.SetIcon(icon.Data)
@@ -43,27 +47,26 @@ func onReady() {
 			select {
 			case <-mUrl.ClickedCh:
 				port := s.GetListenedPort()
-				openURL(fmt.Sprintf("http://127.0.0.1:%d", port))
+				openURL(ctx, fmt.Sprintf("http://127.0.0.1:%d", port))
 			case <-mQuit.ClickedCh:
 				systray.Quit()
 				s.Shutdown()
-				fmt.Println("Quit2 now...")
+				fmt.Println("Quit Overflows...")
 				return
 			}
 		}
 	}()
 
 	go func() {
-		cmd.Main.Run(gctx.GetInitCtx())
+		cmd.Main.Run(ctx)
 	}()
 }
 
-func onExit() {
-	now := time.Now()
-	os.WriteFile(fmt.Sprintf(`on_exit_%d.txt`, now.UnixNano()), []byte(now.String()), 0644)
+func onExit(ctx context.Context) {
+	g.Log().Info(ctx, "ShutDown App")
 }
 
-func openURL(url string) {
+func openURL(ctx context.Context, url string) {
 	var err error
 	switch runtime.GOOS {
 	case "windows":
@@ -73,6 +76,7 @@ func openURL(url string) {
 	case "linux":
 		err = exec.Command("xdg-open", url).Start()
 	}
+	g.Log().Info(ctx, "openURL Failed: ", err.Error())
 	if err != nil {
 		zenity.Info(fmt.Sprintf("Please input the following URL in your browser:\n%s", url),
 			zenity.Title("Failed to open UI"),
