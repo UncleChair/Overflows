@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
 )
@@ -22,8 +23,10 @@ var (
 			s.SetPort(port.Int())
 			mode := parser.GetOpt("m", "standalone")
 			if mode.String() == "standalone" {
+				gdb.SetDefaultGroup("standaloneMode")
 				Standalone.Run(ctx)
 			} else if mode.String() == "server" {
+				gdb.SetDefaultGroup("serverMode")
 				Server.Run(ctx)
 			} else {
 				return errors.New("invalid mode")

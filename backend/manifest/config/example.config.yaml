@@ -15,19 +15,12 @@ database:
     file:           "database-{Y-m-d}.log"
     level :         "all"
     stdout:         true
-  default:
+  standaloneMode:
     link:           "sqlite::@file(/var/data/db.sqlite3)"
+    role:           "master"
   serverMode:
-    host:           "localhost"
-    port:           "5432"
-    user:           "overflower"
-    pass:           "Passw0rd"
-    name:           "overflows"
-    type:           "pgsql"
-    timezone:       "Asia/Shanghai"
-    debug:          "true"
-    dryrun:         0
-    maxLifetime:    "30s"
+    link:           "pgsql:overflower:Passw0rd@localhost:5432/overflows?sslmode=disable"
+    role:           "master"
 
 logger:
   path:             "./Overflows_log"
