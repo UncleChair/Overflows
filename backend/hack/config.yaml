@@ -17,7 +17,7 @@ gfcli:
 
   run:
     path:  "bin"
-    args:  ""
+    args:  "--mode=server"
 
   build:
     name: "overflows"
