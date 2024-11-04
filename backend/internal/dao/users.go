@@ -5,7 +5,12 @@
 package dao
 
 import (
+	"context"
 	"overflows/internal/dao/internal"
+
+	"github.com/gogf/gf/v2/container/gvar"
+	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // internalUsersDao is internal type for wrapping internal DAO implements.
@@ -25,3 +30,23 @@ var (
 )
 
 // Fill with you ideas below.
+
+// AvatarPathHook is a hook used to modify user avatar url to real url
+func (dao *usersDao) AvatarPathHook() gdb.HookHandler {
+	return gdb.HookHandler{
+		Select: func(ctx context.Context, in *gdb.HookSelectInput) (result gdb.Result, err error) {
+			result, err = in.Next(ctx)
+			if err != nil {
+				return
+			}
+			for i, record := range result {
+				if !record["avatar_url"].IsEmpty() {
+					real_url := g.Cfg().MustGet(ctx, "backendURL").String()
+					record["avatar_url"] = gvar.New(real_url + "/csfs/" + record["avatar_url"].String())
+				}
+				result[i] = record
+			}
+			return
+		},
+	}
+}
