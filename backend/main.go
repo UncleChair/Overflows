@@ -3,6 +3,8 @@ package main
 import (
 	_ "overflows/internal/packed"
 
+	_ "overflows/internal/logic"
+
 	"github.com/gogf/gf/v2/os/gctx"
 
 	"overflows/internal/cmd"

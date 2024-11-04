@@ -3,12 +3,14 @@ package auth
 import (
 	"context"
 
-	"github.com/gogf/gf/v2/errors/gcode"
-	"github.com/gogf/gf/v2/errors/gerror"
-
-	"overflows/api/auth/v1"
+	v1 "overflows/api/auth/v1"
+	"overflows/internal/service"
 )
 
 func (c *ControllerV1) Login(ctx context.Context, req *v1.LoginReq) (res *v1.LoginRes, err error) {
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	res = &v1.LoginRes{}
+	token, expire := service.JWTAuth().LoginHandler(ctx)
+	res.Token = token
+	res.Expire = expire.UnixMilli()
+	return
 }
