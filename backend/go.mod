@@ -5,16 +5,24 @@ go 1.22.0
 toolchain go1.23.2
 
 require (
+	github.com/casbin/casbin/v2 v2.100.0
 	github.com/getlantern/systray v1.2.2
+	github.com/gogf/gf-jwt/v2 v2.1.0
 	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.7.4
 	github.com/gogf/gf/contrib/drivers/sqlite/v2 v2.7.4
 	github.com/gogf/gf/v2 v2.7.4
+	github.com/issue9/identicon/v2 v2.1.2
+	github.com/jxo-me/gdb-adapter v1.0.6
 	github.com/ncruces/zenity v0.10.14
+	github.com/wneessen/go-mail v0.5.1
+	golang.org/x/crypto v0.28.0
 )
 
 require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/akavel/rsrc v0.10.2 // indirect
+	github.com/bmatcuk/doublestar/v4 v4.6.1 // indirect
+	github.com/casbin/govaluate v1.2.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/dchest/jsmin v0.0.0-20220218165748-59f39799265f // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
@@ -31,6 +39,7 @@ require (
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
+	github.com/golang-jwt/jwt/v4 v4.3.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/grokify/html-strip-tags-go v0.1.0 // indirect
