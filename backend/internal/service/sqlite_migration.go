@@ -72,7 +72,7 @@ func executeMigrations(ctx context.Context, db gdb.DB, migrationFolder string) {
 	}
 	for _, file := range files {
 		if filepath.Ext(file.Name()) == ".sql" {
-			executed, err := migrationExecuted(ctx, db, file.Name())
+			executed, err := migrationExecuted(ctx, db, gfile.Basename(file.Name()))
 			if err != nil {
 				log.Printf("Error checking migration %s: %v\n", file.Name(), err)
 				continue
