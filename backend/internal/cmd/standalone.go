@@ -36,7 +36,7 @@ var (
 )
 
 func onReady(ctx context.Context) {
-	iconPath := "resource/static/logo.png"
+	iconPath := "resource/static/logo.ico"
 	iconData, err := os.ReadFile(iconPath)
 	if err != nil {
 		panic(err)
@@ -48,12 +48,7 @@ func onReady(ctx context.Context) {
 	go func() {
 		mUrl := systray.AddMenuItem("Open UI", "Open Overflows Frontend")
 		mQuit := systray.AddMenuItem("Exit", "Quit the whole app")
-
-		// Sets the icon of a menu item. Only available on Mac.
-		// mQuit.SetIcon(icon.Data)
-
 		systray.AddSeparator()
-
 		for {
 			select {
 			case <-mUrl.ClickedCh:
