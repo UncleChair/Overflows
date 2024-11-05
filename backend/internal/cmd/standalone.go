@@ -3,11 +3,11 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"os"
 	"os/exec"
 	"runtime"
 
 	"github.com/getlantern/systray"
-	"github.com/getlantern/systray/example/icon"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/ncruces/zenity"
@@ -36,7 +36,12 @@ var (
 )
 
 func onReady(ctx context.Context) {
-	systray.SetIcon(icon.Data)
+	iconPath := "resource/static/logo.png"
+	iconData, err := os.ReadFile(iconPath)
+	if err != nil {
+		panic(err)
+	}
+	systray.SetIcon(iconData)
 	systray.SetTitle("Overflows")
 	systray.SetTooltip("Overflows")
 
