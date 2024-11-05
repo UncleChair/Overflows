@@ -41,7 +41,7 @@ var (
 				)
 			})
 			s.SetFileServerEnabled(true)
-			s.SetServerRoot("./resource/public/www")
+			s.SetServerRoot("resource/public/www")
 			s.Run()
 			return nil
 		},
