@@ -9,6 +9,7 @@ import (
 	"github.com/getlantern/systray"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
+	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/gogf/gf/v2/os/gres"
 	"github.com/ncruces/zenity"
 )
@@ -37,7 +38,7 @@ var (
 
 func onReady(ctx context.Context) {
 	iconPath := "resource/static/logo.ico"
-	iconData := gres.GetContent(iconPath)
+	iconData := getIconContent(iconPath)
 	systray.SetIcon(iconData)
 	systray.SetTitle("Overflows")
 	systray.SetTooltip("Overflows")
@@ -86,4 +87,16 @@ func openURL(url string) {
 			zenity.Title("Failed to open UI"),
 			zenity.InfoIcon)
 	}
+}
+
+func getIconContent(iconPath string) (data []byte) {
+	if resource := gres.Get(iconPath); resource != nil {
+		data = resource.Content()
+	} else {
+		absolutePath := gfile.RealPath(iconPath)
+		if absolutePath != "" {
+			data = gfile.GetBytes(absolutePath)
+		}
+	}
+	return
 }
