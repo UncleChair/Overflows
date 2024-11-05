@@ -16,6 +16,12 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.23.2'
+          cache-dependency-path: 'backend/go.mod'
+      
+      - name: Set node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.15.1
 
       - name: Set up GF
         run: |
@@ -26,29 +32,33 @@ jobs:
       
       - name: Set up env
         run: |
-          export CGO_ENABLED=1 &&
-          sudo apt-get install -y build-essential pkg-config libappindicator3-dev gcc
+          export GO111MODULE=on &&
+          sudo apt-get install -y libayatana-appindicator3-dev &&
+          cp ./backend/manifest/config/example.config.yaml ./backend/manifest/config/config.yaml
 
-      - name: Build
-        run: gf build main.go -n gf -a all -s all -p temp
-
-      - name: Move Files Before Release
+      - name: Build frontend
         run: |
-          cd temp
-          for OS in *;do for FILE in $OS/*;\
-          do if [[ ${OS} =~ 'windows' ]];\
-          then mv $FILE overflows_$OS.exe && rm -rf $OS;\
-          else mv $FILE overflows_$OS && rm -rf $OS;\
-          fi;done;done
+          cd frontend &&
+          npm install &&
+          npm run build
+
+      - name: Build backend
+        run: |
+          cd backend &&
+          gf pack resource,manifest/config,manifest/database/SQLite/migrations internal/packed/build_pack_data.go --keepPath=true -y &&
+          go build -o temp/overflows_linux_amd64 main.go &&
+          GOOS=windows GOARCH=amd64 go build -o temp/overflows_windows_amd64.exe main.go &&
+          gf build &&
+          mv temp/overflows.exe temp/overflows_windows_amd64_gui.exe
 
       - name: Create Github Release
         id: create_release
         uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name:     ${{ github.ref }}
-          name: Overflows Release ${{ github.ref }}
+          name: Overflows Release ${{ github.ref_name }}
           draft:        false
           prerelease:   false
       
@@ -56,6 +66,6 @@ jobs:
         id:   upload-release-asset
         uses: alexellis/upload-assets@0.4.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          asset_paths: '["temp/overflows_*"]'
+          asset_paths: '["backend/temp/overflows_*"]'
