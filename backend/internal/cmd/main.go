@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/gogf/gf/v2/os/gcmd"
-	"github.com/gogf/gf/v2/os/gres"
 )
 
 var (
@@ -16,7 +15,6 @@ var (
 			{Name: "mode", Short: "m", Brief: "run mode, choose from [standalone, server]", IsArg: false},
 		},
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
-			gres.Dump()
 			Init.Run(ctx)
 			mode := parser.GetOpt("m", "standalone")
 			if mode.String() == "standalone" {
