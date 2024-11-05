@@ -1,0 +1,5 @@
+*.js linguist-language=JavaScript
+*.vue linguist-language=JavaScript
+*.go linguist-language=Go
+
+*.md linguist-hidden
