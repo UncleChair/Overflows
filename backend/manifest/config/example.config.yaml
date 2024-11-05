@@ -16,7 +16,7 @@ database:
     level :         "all"
     stdout:         true
   standaloneMode:
-    link:           "sqlite::@file(/var/data/db.sqlite3)"
+    link:           "sqlite::@file(./overflows.db)"
     role:           "master"
   serverMode:
     link:           "pgsql:overflower:Passw0rd@localhost:5432/overflows?sslmode=disable"

@@ -23,8 +23,8 @@ gfcli:
     name: "overflows"
     arch: "amd64"
     system: "windows"
-    packSrc: "resource, manifest/config/config.yaml"
-    output: "./temp/overflows.exe"
+    packSrc: "resource,manifest/config,manifest/database/SQLite/migrations -y"
+    output: "temp/overflows.exe"
     dumpEnv: false
     extra: "-ldflags=\"-H windowsgui\""
 
@@ -32,7 +32,7 @@ gfcli:
   #   name: "overflows"
   #   arch: "amd64"
   #   system: "linux"
-  #   packSrc: "resource, manifest/config/config.yaml"
+  #   packSrc: "resource,manifest/config,manifest/database/SQLite/migrations -y"
   #   output: "./temp/overflows"
   #   dumpEnv: false
   #   cgo: true
