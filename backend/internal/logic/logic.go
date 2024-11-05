@@ -6,7 +6,6 @@ package logic
 
 import (
 	_ "overflows/internal/logic/bcrypt"
-	_ "overflows/internal/logic/casbin"
 	_ "overflows/internal/logic/context"
 	_ "overflows/internal/logic/mail"
 	_ "overflows/internal/logic/middleware"

@@ -1,31 +1,53 @@
-// ================================================================================
-// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
-// You can delete these comments if you wish manually maintain this interface file.
-// ================================================================================
-
 package service
 
 import (
+	"context"
+
 	casbin "github.com/casbin/casbin/v2"
+	"github.com/casbin/casbin/v2/model"
+	gdbadapter "github.com/jxo-me/gdb-adapter"
 )
 
-type (
-	ICasbin interface {
-		DefaultEnforcer() *casbin.Enforcer
-	}
-)
+var CasbinInstance *sCasbin
 
-var (
-	localCasbin ICasbin
-)
-
-func Casbin() ICasbin {
-	if localCasbin == nil {
-		panic("implement not found for interface ICasbin, forgot register?")
-	}
-	return localCasbin
+type sCasbin struct {
+	Adapter  interface{}
+	Model    model.Model
+	Enforcer *casbin.Enforcer
 }
 
-func RegisterCasbin(i ICasbin) {
-	localCasbin = i
+func InitCasbin(ctx context.Context, groupname string) {
+	c := &sCasbin{}
+	c.Model = c.defaultModel()
+	c.Adapter, _ = gdbadapter.NewAdapter(ctx, groupname)
+	c.Enforcer, _ = casbin.NewEnforcer(c.Model, c.Adapter)
+	CasbinInstance = c
+}
+
+func Casbin() *sCasbin {
+	return CasbinInstance
+}
+
+func (s *sCasbin) defaultModel() (m model.Model) {
+	m, _ = model.NewModelFromString(`
+[request_definition]
+r = sub, obj, act
+
+[policy_definition]
+p = sub, obj, act
+
+[role_definition]
+g = _, _
+
+[policy_effect]
+e = some(where (p.eft == allow))
+
+[matchers]
+m = g(r.sub, p.sub) && r.obj == p.obj && r.act == p.act
+`)
+	return
+}
+
+func (s *sCasbin) DefaultEnforcer() *casbin.Enforcer {
+	return s.Enforcer
 }

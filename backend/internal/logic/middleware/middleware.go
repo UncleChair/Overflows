@@ -81,7 +81,6 @@ func (s *sMiddleware) NeverDoneCtx(r *ghttp.Request) {
 func (s *sMiddleware) IsAdmin(r *ghttp.Request) {
 	uid := service.Context().Use(r.Context()).User.Uid
 	e := service.Casbin().DefaultEnforcer()
-	_ = e.LoadPolicy()
 	isAdmin, _ := e.HasRoleForUser(uid, "admin")
 	if !isAdmin {
 		r.Response.Status = 401
