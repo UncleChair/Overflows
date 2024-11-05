@@ -18,7 +18,7 @@ func init() {
 	c := New()
 	c.Model = c.defaultModel()
 	c.Adapter = nil
-	c.Enforcer, _ = casbin.NewEnforcer(c.Model, c.Adapter)
+	c.Enforcer = nil
 	service.RegisterCasbin(c)
 }
 
