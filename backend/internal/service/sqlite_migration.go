@@ -38,14 +38,13 @@ func createMigrationHistoryTable(ctx context.Context, db gdb.DB) error {
 	}
 	return nil
 }
-
 func migrationExecuted(ctx context.Context, db gdb.DB, migrationName string) (bool, error) {
-	query := `SELECT EXISTS(SELECT 1 FROM migration_history WHERE migration_name = ?)`
-	result, err := db.Query(ctx, query, migrationName)
+	query := `SELECT COUNT(*) FROM migration_history WHERE migration_name = ?`
+	count, err := db.GetValue(ctx, query, migrationName)
 	if err != nil {
-		return false, err
+		return false, fmt.Errorf("failed to check migration status: %w", err)
 	}
-	return result.IsEmpty(), nil
+	return count.Int() > 0, nil
 }
 
 func recordMigration(ctx context.Context, db gdb.DB, migrationName string) error {
