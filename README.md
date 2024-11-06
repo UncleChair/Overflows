@@ -71,6 +71,10 @@ cd backend
 atlas migrate apply --env local
 ```
 
+# Development
+
+- When using `standalone` mode locally, build the static files package by running `gf build` in `backend` folder with the same process like `gf build` do. Otherwise, file manager can not get migration files.
+
 # TODO LIST
 
 ## Backend TODO
