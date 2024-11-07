@@ -9,7 +9,6 @@ FROM golang:1.23.2 as dev
 WORKDIR /var/www
 COPY --from=builder /go/bin/gf /go/bin/gf
 COPY --from=arigaio/atlas:latest-alpine /atlas /usr/local/bin/atlas
-COPY backend/manifest/database/Pgsql/migrations /migrations
 
 RUN apt-get update && apt-get install -y \
     build-essential \
