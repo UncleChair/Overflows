@@ -13,7 +13,7 @@ gfcli:
     # database rather than localhost
     # - link: "sqlite::@file(./manifest/database/SQLite/overflows.db)"
     - link: "pgsql:overflower:Passw0rd@tcp(localhost:5432)/overflows"
-      tablesEx: "casbin_rule, atlas_schema_revisions, sqlite_sequence"
+      tablesEx: "casbin_rule, atlas_schema_revisions, sqlite_sequence, migration_history"
 
   run:
     path:  "bin"
