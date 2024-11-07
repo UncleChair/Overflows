@@ -19,7 +19,7 @@ database:
     link:           "sqlite::@file(./overflows.db)"
     role:           "master"
   serverMode:
-    link:           "pgsql:overflower:Passw0rd@localhost:5432/overflows?sslmode=disable"
+    link:           "pgsql:overflower:Passw0rd@tcp(localhost:5432)/overflows"
     role:           "master"
 
 logger:
