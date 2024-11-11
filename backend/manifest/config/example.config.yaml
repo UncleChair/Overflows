@@ -11,7 +11,7 @@ server:
 
 database:
   logger:
-    path:           "./Overflows_log"
+    path:           "./.overflows_log"
     file:           "database-{Y-m-d}.log"
     level :         "all"
     stdout:         true
@@ -23,6 +23,6 @@ database:
     role:           "master"
 
 logger:
-  path:             "./Overflows_log"
+  path:             "./.overflows_log"
   level :           "all"
   stdout:           true
