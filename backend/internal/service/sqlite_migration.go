@@ -54,7 +54,15 @@ func recordMigration(ctx context.Context, db gdb.DB, migrationName string) error
 }
 
 func executeSQLFile(ctx context.Context, db gdb.DB, sqlFile string) error {
-	content := gres.GetContent(sqlFile)
+	var content []byte
+	if resource := gres.Get(sqlFile); resource != nil {
+		content = resource.Content()
+	} else {
+		absolutePath := gfile.RealPath(sqlFile)
+		if absolutePath != "" {
+			content = gfile.GetBytes(absolutePath)
+		}
+	}
 	_, err := db.Exec(ctx, string(content))
 	if err != nil {
 		return fmt.Errorf("failed to execute SQL from file %s: %v", sqlFile, err)
@@ -65,29 +73,44 @@ func executeSQLFile(ctx context.Context, db gdb.DB, sqlFile string) error {
 }
 
 func executeMigrations(ctx context.Context, db gdb.DB, migrationFolder string) {
-	var files []*gres.File
-	if resources := gres.ScanDir(migrationFolder, "*", false); resources != nil {
-		files = resources
+	var (
+		resources []*gres.File
+		files     []string
+		err       error
+	)
+	resources = gres.ScanDirFile(migrationFolder, "*", false)
+	if len(resources) > 0 {
+		for _, file := range resources {
+			files = append(files, file.Name())
+		}
+	} else {
+		absolutePath := gfile.RealPath(migrationFolder)
+		files, err = gfile.ScanDir(absolutePath, "*", false)
+		if err != nil {
+			log.Printf("Error scanning migration folder %s: %v\n", migrationFolder, err)
+			return
+		}
 	}
-	for _, file := range files {
-		if filepath.Ext(file.Name()) == ".sql" {
-			executed, err := migrationExecuted(ctx, db, gfile.Basename(file.Name()))
+
+	for _, filename := range files {
+		if filepath.Ext(filename) == ".sql" {
+			executed, err := migrationExecuted(ctx, db, gfile.Basename(filename))
 			if err != nil {
-				log.Printf("Error checking migration %s: %v\n", file.Name(), err)
+				log.Printf("Error checking migration %s: %v\n", filename, err)
 				continue
 			}
 
 			if !executed {
-				err := executeSQLFile(ctx, db, file.Name())
+				err := executeSQLFile(ctx, db, filename)
 				if err != nil {
-					log.Printf("Error executing migration %s: %v\n", file.Name(), err)
+					log.Printf("Error executing migration %s: %v\n", filename, err)
 				} else {
-					if err := recordMigration(ctx, db, gfile.Basename(file.Name())); err != nil {
-						log.Printf("Error recording migration %s: %v\n", file.Name(), err)
+					if err := recordMigration(ctx, db, gfile.Basename(filename)); err != nil {
+						log.Printf("Error recording migration %s: %v\n", filename, err)
 					}
 				}
 			} else {
-				fmt.Printf("Migration %s has already been executed, skipping.\n", file.Name())
+				fmt.Printf("Migration %s has already been executed, skipping.\n", filename)
 			}
 		}
 	}
