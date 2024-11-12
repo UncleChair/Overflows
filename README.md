@@ -24,6 +24,24 @@ Overflows is a light weight job scheduler for your work, help you manage your ta
 
 ## Use Release
 
+Both Windows and Linux could use binary files with certain parameters:
+
+``` bash
+$ ./overflows -h
+USAGE
+    overflows [OPTION]
+
+OPTION
+    -p, --port   port number
+    -m, --mode   run mode, choose from [standalone, server]
+    -h, --help   more information about this command
+```
+
+- __port__: Used to specify the port number of the server, by default it's `8000`.
+- __mode__: Used to specify the run mode of the server, choose from `standalone` and `server`, by default it's `standalone`.
+
+_`Standalone` mode would use SQLite as database and manage database automatically, while `server` mode would use PostgreSQL as database and you need to migrate database schema in the `manifest` folder._
+
 ## Build from Source
 
 ### Frontend
@@ -79,8 +97,8 @@ atlas migrate apply --env local
 
 ## Backend TODO
 
-- [ ] Selfhost mode with SQLite
-- [ ] Server mode with Postgre or Mysql
+- [x] Selfhost mode with SQLite
+- [x] Server mode with Postgre or Mysql
 - [ ] Casbin RBAC
 - [ ] Token login and session login
 - [ ] Stack sharing
