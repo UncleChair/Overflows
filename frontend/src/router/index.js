@@ -29,6 +29,14 @@ router.onError((err, to) => {
   }
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.path === '/') {
+    next({ path: '/home' })
+  } else {
+    next()
+  }
+})
+
 router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
