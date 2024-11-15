@@ -3,5 +3,31 @@
         "welcome": "Welcome to",
         "getStarted": "Get Started",
         "learnUsage": "Learn Usage"
+    },
+    "system": {
+        "moreLanguage": "More Language"
+    },
+    "login": {
+      "title": "Login to your account",
+      "usernameOrEmail": "Username or email",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgetPassword": "Forgot password?",
+      "login": "login",
+      "noAccount": "No account?",
+      "signup": "Sign up now",
+      "loginFailed": "Username or password is incorrect"
+    },
+    "signup": {
+      "title": "Create your account",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "signup": "Signup",
+      "hasAccount": "Already have an account?",
+      "login": "Login now",
+      "errorTitle": "Signup Failed",
+      "usernameError": "Username has been used",
+      "emailError": "Email has been used"
     }
 }
