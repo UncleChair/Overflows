@@ -33,7 +33,7 @@ var (
 			)
 			s.EnableAdmin("/system")
 			s.BindMiddleware("/system/*", service.Middleware().Ctx)
-			s.Group("/", func(group *ghttp.RouterGroup) {
+			s.Group("/api/v1/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(
 					auth.NewV1(),
@@ -42,6 +42,9 @@ var (
 			})
 			s.SetFileServerEnabled(true)
 			s.SetServerRoot("resource/public/www")
+			s.BindHandler("/*any", func(r *ghttp.Request) {
+				r.Response.ServeFile("resource/public/www/index.html")
+			})
 			s.Run()
 			return nil
 		},
