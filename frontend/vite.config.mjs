@@ -14,7 +14,8 @@ import { fileURLToPath, URL } from 'node:url'
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    outDir: '../backend/resource/public/www'
+    outDir: '../backend/resource/public/www',
+    emptyOutDir: true,
   },
   plugins: [
     VueRouter(),
