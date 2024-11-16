@@ -1,3 +1,10 @@
+<route>
+    {
+        meta: {
+            layout: "empty",
+        }
+    }
+</route>
 <script>
 import { useUserInfoStore } from "@/stores/userInfo";
 import axios from "axios";
@@ -81,7 +88,7 @@ export default {
     <v-container class="h-100 pa-0" fluid>
         <v-row align="center" class="h-100" justify="center">
             <v-responsive class="flex-1-1 px-4" max-width="475">
-                <v-img class="mx-auto mb-4" max-width="60" src="https://vuetifyjs.b-cdn.net/docs/images/logos/v.svg" />
+                <v-img class="mx-auto mb-4" max-width="60" src="@/assets/logo.svg" />
                 <div class="text-h5 text-center mb-8 font-weight-medium">
                     {{ $t('login.title') }}
                 </div>

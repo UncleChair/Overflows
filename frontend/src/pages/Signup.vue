@@ -1,3 +1,10 @@
+<route>
+    {
+        meta: {
+            layout: "empty",
+        }
+    }
+</route>
 <script>
 import { useUserInfoStore } from "@/stores/userInfo";
 import { mapStores } from "pinia";
@@ -71,43 +78,38 @@ export default {
 }
 </script>
 <template>
-    <v-layout>
-        <v-main min-height="800">
-            <v-container class="h-100 pa-0" fluid>
-                <v-row align="center" class="h-100" justify="center">
-                    <v-responsive class="flex-1-1 px-4" max-width="475">
-                        <v-img class="mx-auto mb-4" max-width="60"
-                            src="https://vuetifyjs.b-cdn.net/docs/images/logos/v.svg" />
-                        <div class="text-h5 text-center mb-8 font-weight-medium">
-                            {{ $t('signup.title') }}
-                        </div>
-                        <v-card class="pa-10 mb-4" elevation="3" rounded="lg">
-                            <v-form v-model="form" @submit.prevent="onSubmit">
-                                <v-label class="text-subtitle-2">{{ $t('signup.username') }}</v-label>
-                                <v-text-field v-model="this.username" :rules="[required]" color="primary"
-                                    density="compact" rounded="lg" variant="outlined" />
-                                <v-label class="text-subtitle-2">{{ $t('signup.email') }}</v-label>
-                                <v-text-field v-model="this.email" :rules="[required, isEmail]" color="primary"
-                                    density="compact" rounded="lg" variant="outlined" />
-                                <v-label class="text-subtitle-2">{{ $t('signup.password') }}</v-label>
-                                <v-text-field v-model="this.password" :rules="[required, isPassword2]"
-                                    :type="this.showPassword ? 'text' : 'password'" color="primary"
-                                    @click:append-inner="this.showPassword = !this.showPassword"
-                                    :append-inner-icon="this.showPassword ? '$eye' : '$eyeOff'" density="compact"
-                                    rounded="lg" variant="outlined" />
-                                <v-btn block type="submit" class="text-none mt-4" color="primary" rounded="lg"
-                                    :text="$t('signup.signup')" />
-                            </v-form>
-                        </v-card>
-                        <div class="text-center text-body-2">
-                            {{ $t('signup.hasAccount') }}
-                            <router-link class="text-decoration-none text-primary font-weight-medium"
-                                :to="{ path: '/login' }">{{
-                                    $t('signup.login') }}</router-link>
-                        </div>
-                    </v-responsive>
-                </v-row>
-            </v-container>
-        </v-main>
-    </v-layout>
+    <v-container class="h-100 pa-0" fluid>
+        <v-row align="center" class="h-100" justify="center">
+            <v-responsive class="flex-1-1 px-4" max-width="475">
+                <v-img class="mx-auto mb-4" max-width="60" src="@/assets/logo.svg" />
+                <div class="text-h5 text-center mb-8 font-weight-medium">
+                    {{ $t('signup.title') }}
+                </div>
+                <v-card class="pa-10 mb-4" elevation="3" rounded="lg">
+                    <v-form v-model="form" @submit.prevent="onSubmit">
+                        <v-label class="text-subtitle-2">{{ $t('signup.username') }}</v-label>
+                        <v-text-field v-model="this.username" :rules="[required]" color="primary" density="compact"
+                            rounded="lg" variant="outlined" />
+                        <v-label class="text-subtitle-2">{{ $t('signup.email') }}</v-label>
+                        <v-text-field v-model="this.email" :rules="[required, isEmail]" color="primary"
+                            density="compact" rounded="lg" variant="outlined" />
+                        <v-label class="text-subtitle-2">{{ $t('signup.password') }}</v-label>
+                        <v-text-field v-model="this.password" :rules="[required, isPassword2]"
+                            :type="this.showPassword ? 'text' : 'password'" color="primary"
+                            @click:append-inner="this.showPassword = !this.showPassword"
+                            :append-inner-icon="this.showPassword ? '$eye' : '$eyeOff'" density="compact" rounded="lg"
+                            variant="outlined" />
+                        <v-btn block type="submit" class="text-none mt-4" color="primary" rounded="lg"
+                            :text="$t('signup.signup')" />
+                    </v-form>
+                </v-card>
+                <div class="text-center text-body-2">
+                    {{ $t('signup.hasAccount') }}
+                    <router-link class="text-decoration-none text-primary font-weight-medium"
+                        :to="{ path: '/login' }">{{
+                            $t('signup.login') }}</router-link>
+                </div>
+            </v-responsive>
+        </v-row>
+    </v-container>
 </template>
