@@ -16,7 +16,7 @@
         <v-app-bar-nav-icon class="ms-auto text-none" slim>
           <LocaleChange />
         </v-app-bar-nav-icon>
-        <template v-if="this.logged">
+        <template v-if="logged">
           <v-app-bar-nav-icon class="ms-auto text-none" slim>
             <UserAvatar />
           </v-app-bar-nav-icon>
@@ -35,6 +35,12 @@
   </v-app>
 </template>
 
-<script setup>
-//
+<script>
+export default {
+  data() {
+    return {
+      logged: false,
+    };
+  },
+};
 </script>
