@@ -6,8 +6,8 @@
     }
 </route>
 <script>
+import request from "@/request/instance";
 import { useUserInfoStore } from "@/stores/userInfo";
-import axios from "axios";
 import { mapStores } from "pinia";
 
 export default {
@@ -40,7 +40,7 @@ export default {
             }
             this.loading = true;
             try {
-                let loginResponse = await axios.post("/auth/login", {
+                let loginResponse = await request.post("/auth/login", {
                     username: username,
                     email: email,
                     password: this.password
@@ -61,7 +61,7 @@ export default {
             }
             // get user info
             try {
-                let userInfoResponse = await axios.get("/users/current")
+                let userInfoResponse = await request.get("/users/current")
                 this.userInfoStore.uid = userInfoResponse.data.uid;
                 this.userInfoStore.username = userInfoResponse.data.username;
                 this.userInfoStore.email = userInfoResponse.data.email;

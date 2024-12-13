@@ -1,4 +1,4 @@
-import axios from "axios";
+import request from "@/request/instance";
 import { defineStore } from "pinia";
 
 export const useUserInfoStore = defineStore("userInfo", {
@@ -17,7 +17,7 @@ export const useUserInfoStore = defineStore("userInfo", {
     },
     actions: {
         async syncUserBasicInfo() {
-            await axios.get("/users/current")
+            await request.get("/users/current")
                 .then((response) => {
                     this.uid = response.data.uid;
                     this.username = response.data.username;

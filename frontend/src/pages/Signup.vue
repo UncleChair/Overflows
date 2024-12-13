@@ -8,7 +8,7 @@
 <script>
 import { useUserInfoStore } from "@/stores/userInfo";
 import { mapStores } from "pinia";
-import axios from "axios";
+import request from "@/request/instance";
 
 export default {
     data() {
@@ -38,7 +38,7 @@ export default {
             return reg.test(v) || this.$t('system.invalidPassword')
         },
         signup() {
-            axios.post("/auth/signup", {
+            request.post("/auth/signup", {
                 user_name: this.username,
                 email: this.email,
                 password: this.password,
