@@ -41,9 +41,9 @@
       href: 'https://x.com/vuetifyjs',
     },
     {
-      title: 'Vuetify GitHub',
-      icon: `mdi-github`,
-      href: 'https://github.com/vuetifyjs/vuetify',
+      title: 'Overflows GitHub',
+      icon: '$github',
+      href: 'https://github.com/UncleChair/Overflows',
     },
   ]
 </script>
