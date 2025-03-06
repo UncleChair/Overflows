@@ -2,7 +2,7 @@ import { useUserInfoStore } from '@/stores/userInfo';
 import axios from 'axios';
 
 const request = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: (import.meta.env.VITE_BACKEND_URL || '') + "/api/v1",
     timeout: import.meta.env.VITE_REQUEST_TIMEOUT,
     retry: 3,
 });
