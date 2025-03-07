@@ -25,10 +25,20 @@ var (
 			s.SetPort(port.Int())
 
 			if mode.String() == "standalone" || mode.String() == "server" {
-				gdb.SetDefaultGroup(mode.String() + "Mode")
+				dbConfig := g.Cfg().MustGet(ctx, "database."+mode.String()+"Mode").Map()
+				gdb.SetConfig(gdb.Config{
+					"default": gdb.ConfigGroup{
+						gdb.ConfigNode{
+							Link: dbConfig["link"].(string),
+							Role: gdb.Role(dbConfig["role"].(string)),
+						},
+					},
+				})
 			} else {
 				return errors.New("invalid mode")
 			}
+
+			g.Dump(gdb.GetDefaultGroup())
 
 			// Do migration for standalone mode only
 			if mode.String() == "standalone" {
