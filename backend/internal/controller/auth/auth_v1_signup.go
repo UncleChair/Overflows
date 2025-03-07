@@ -23,7 +23,7 @@ func (c *ControllerV1) Signup(ctx context.Context, req *v1.SignupReq) (res *v1.S
 	e := service.Casbin().DefaultEnforcer()
 	e.AddGroupingPolicy(user.Uid, "user")
 	e.SavePolicy()
-	go service.MailServer().SendRegisterEmail(ctx, user)
+	// go service.MailServer().SendRegisterEmail(ctx, user)
 	res = &v1.SignupRes{}
 	res.Token, _ = service.JWTAuth().LoginHandler(ctx)
 	service.Context().SetHttpStatus(ctx, 201)
