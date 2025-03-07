@@ -35,15 +35,20 @@ var (
 			s.BindMiddleware("/system/*", service.Middleware().Ctx)
 			s.Group("/api/v1/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
-				group.Bind(
-					auth.NewV1(),
-					users.NewV1(),
-				)
+				group.Group("/auth", func(group *ghttp.RouterGroup) {
+					group.Bind(auth.NewV1())
+				})
+				group.Group("/users", func(group *ghttp.RouterGroup) {
+					group.Bind(users.NewV1())
+				})
 			})
 			s.SetFileServerEnabled(true)
 			s.SetServerRoot("resource/public/www")
-			s.BindHandler("/*any", func(r *ghttp.Request) {
-				r.Response.ServeFile("resource/public/www/index.html")
+			s.BindHandler("/*", func(r *ghttp.Request) {
+				path := r.URL.Path
+				if len(path) >= 4 && path[0:4] != "/api" {
+					r.Response.ServeFile("resource/public/www/index.html")
+				}
 			})
 			s.Run()
 			return nil
