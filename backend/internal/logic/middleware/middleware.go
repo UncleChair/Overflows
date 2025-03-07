@@ -48,12 +48,12 @@ func (s *sMiddleware) CORS(r *ghttp.Request) {
 	corsOptions := r.Response.DefaultCORSOptions()
 	// Set allow all cors when dev or staging (only in docker)
 	if consts.AppEnv == "prod" {
-		corsOptions.AllowDomain = []string{"unclechair.vip", "silicious.net"}
 		corsOptions.AllowOrigin = r.Request.Header.Get("Origin")
 		corsOptions.ExposeHeaders = "Trace-Id"
 	} else {
-		corsOptions.AllowDomain = []string{"localhost"}
-		corsOptions.AllowOrigin = "http://localhost:3000"
+		// 开发环境允许所有域名访问
+		corsOptions.AllowDomain = []string{"*"}
+		corsOptions.AllowOrigin = "*"
 		corsOptions.ExposeHeaders = "Trace-Id"
 	}
 	if !r.Response.CORSAllowedOrigin(corsOptions) {
